@@ -1,41 +1,59 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // Select DOM elements
-  const addButton = document.getElementById('add-task-btn');
-  const taskInput = document.getElementById('task-input');
-  const taskList = document.getElementById('task-list');
+document.addEventListener("DOMContentLoaded", function loadTasks() {
+  let tasks = JSON.parse(localStorage.getItem('tasks')) ||  [];
+  tasks.forEach(task => addTaskToDOM(task));
+  // My code
+  const form = document.getElementById("To-Do List Appplication");
+  const addButton = document.getElementById("add-task-btn");
+  const taskInput = document.getElementById("task-input");
+  const taskList = document.getElementById("task-list");
 
-  // Function to add a task
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    addTask();
+  });
+
+  // AddTask creation function
   function addTask() {
-      const taskText = taskInput.value.trim();
-
-      if (taskText === "") {
-          alert("Please enter a task");
-          return;
-      }
-
-      // Create new task elements
-      const li = document.createElement('li');
-      li.textContent = taskText;
-
-      const removeBtn = document.createElement('button');
-      removeBtn.textContent = "Remove";
-      removeBtn.className = 'remove-btn';
-      removeBtn.onclick = () => {
-          taskList.removeChild(li);
-      };
-
-      li.appendChild(removeBtn);
-      taskList.appendChild(li);
-
-      // Clear the input field
-      taskInput.value = '';
+    const taskText = taskInput.value.trim();
+    if (taskText === "") {
+      alert("Please enter a task.");
+      return;
+    }
+    const li = document.createElement("li");
+    li.textContent = taskText;
+    const removeButton = document.createElement("button");
+    removeButton.textContent = "Remove";
+    removeButton.className = "remove-btn";
+    removeButton.onclick = function () {
+      taskList.removeChild(li);
+    };
+    li.appendChild(removeButton);
+    taskList.appendChild(li); // Correct way to add the task to the list
+    taskInput.value = "";
   }
 
-  // Add event listeners
-  addButton.addEventListener('click', addTask);
-  taskInput.addEventListener('keypress', (event) => {
-      if (event.key === 'Enter') {
-          addTask();
-      }
+  // this will disable reload on click
+  addButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    addTask();
   });
+
+  taskInput.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      addTask();
+    }
+  });
+
+  // Task Addition functionality
+  function addTask(task, save = true){
+    localStorage.setItem('tasks', JSON.stringify(storedTasks));
+    addTaskToDOM(task);
+
+    if (save) {
+      const storedTasks = (localStorage.getItem ('tasks' || '[]'));
+      storedTasks.push(taskText);
+    }
+  }
+
 });
