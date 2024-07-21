@@ -16,23 +16,24 @@ document.addEventListener("DOMContentLoaded", function loadTasks() {
   function addTask() {
     const taskText = taskInput.value.trim();
     if (taskText === "") {
-      alert("Please enter a task.");
-      return;
-    
+        alert("Please enter a task.");
+        return;
+    }
+
     const li = document.createElement("li");
     li.textContent = taskText;
+    
     const removeButton = document.createElement("button");
     removeButton.textContent = "Remove";
     removeButton.className = "remove-btn";
     removeButton.onclick = function () {
-      taskList.removeChild(li);
+        taskList.removeChild(li);
     };
+    
     li.appendChild(removeButton);
     taskList.appendChild(li); // Correct way to add the task to the list
     taskInput.value = "";
-  }
 }
-  
 
   // this will disable reload on click
   addButton.addEventListener("click", function (e) {
