@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function loadTasks() {
     if (taskText === "") {
       alert("Please enter a task.");
       return;
-    }
+    
     const li = document.createElement("li");
     li.textContent = taskText;
     const removeButton = document.createElement("button");
@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", function loadTasks() {
     taskList.appendChild(li); // Correct way to add the task to the list
     taskInput.value = "";
   }
+}
+  
 
   // this will disable reload on click
   addButton.addEventListener("click", function (e) {
